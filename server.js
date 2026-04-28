@@ -25,7 +25,7 @@ app.post('/login', async (req,res)=>{
   const user = result.rows[0];
   if(!user) return res.sendStatus(401);
 
-  const valid = await bcrypt.compare(password, user.password);
+const valid = password === user.password;
   if(!valid) return res.sendStatus(401);
 
   const token = jwt.sign(user, SECRET);
