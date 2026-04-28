@@ -1,0 +1,50 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<h2>Tickets</h2>
+<button onclick="load()">Load</button>
+
+<table border="1">
+<tbody id="t"></tbody>
+</table>
+
+<script>
+async function load(){
+  const token = localStorage.getItem('token');
+
+  const res = await fetch('/tickets',{
+    headers:{Authorization:token}
+  });
+
+  const data = await res.json();
+
+  t.innerHTML = data.map(x=>
+    `<tr>
+      <td>${x.id}</td>
+      <td>${x.title}</td>
+      <td>${x.status}</td>
+      <td>
+        <button onclick="update(${x.id},'Closed')">Close</button>
+      </td>
+    </tr>`
+  ).join('');
+}
+
+async function update(id,status){
+  const token = localStorage.getItem('token');
+
+  await fetch('/tickets/'+id,{
+    method:'PUT',
+    headers:{
+      'Content-Type':'application/json',
+      Authorization:token
+    },
+    body:JSON.stringify({status})
+  });
+
+  load();
+}
+</script>
+</body>
+</html>
