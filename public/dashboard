@@ -12,9 +12,9 @@
 async function load(){
   const token = localStorage.getItem('token');
 
-  const res = await fetch('/stats',{
-    headers:{Authorization:token}
-  });
+const res = await fetch('https://ticket-system-pro.onrender.com/stats', {
+  headers:{Authorization:token}
+});
 
   const data = await res.json();
   document.getElementById('stats').innerHTML =
