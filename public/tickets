@@ -1,20 +1,11 @@
-
-<!DOCTYPE html>
-<html>
-<body>
-<h2>Tickets</h2>
-<button onclick="load()">Load</button>
-
-<table border="1">
-<tbody id="t"></tbody>
-</table>
-
 <script>
 async function load(){
   const token = localStorage.getItem('token');
 
-  const res = await fetch('/tickets',{
-    headers:{Authorization:token}
+  const res = await fetch('https://ticket-system-pro.onrender.com/tickets',{
+    headers:{
+      Authorization: `Bearer ${token}`
+    }
   });
 
   const data = await res.json();
@@ -34,11 +25,11 @@ async function load(){
 async function update(id,status){
   const token = localStorage.getItem('token');
 
-  await fetch('/tickets/'+id,{
+  await fetch('https://ticket-system-pro.onrender.com/tickets/'+id,{
     method:'PUT',
     headers:{
       'Content-Type':'application/json',
-      Authorization:token
+      Authorization: `Bearer ${token}`
     },
     body:JSON.stringify({status})
   });
@@ -46,5 +37,3 @@ async function update(id,status){
   load();
 }
 </script>
-</body>
-</html>
